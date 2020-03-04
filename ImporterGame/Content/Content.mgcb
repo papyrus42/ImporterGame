@@ -1,0 +1,21 @@
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/$(Platform)
+/intermediateDir:obj/$(Platform)
+/platform:Windows
+/config:
+/profile:Reach
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+/reference:..\..\ImporterPipeline\bin\Debug\ImporterPipeline.dll
+
+#---------------------------------- Content ---------------------------------#
+
+#begin stuff.stuff
+/importer:StuffImporter
+/processor:StuffProcessor
+/build:stuff.stuff
+
