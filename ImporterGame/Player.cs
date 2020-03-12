@@ -69,21 +69,21 @@ namespace ImporterGame
             bounds.X = Position.X;
             bounds.Y = Position.Y;
 
-            if (bounds.X < 0)
-            {
-                bounds.X = 0;
-                Position.X = 0;
-            }
-            if (bounds.X > game.GraphicsDevice.Viewport.Width - bounds.Width)
-            {
-                bounds.X = game.GraphicsDevice.Viewport.Width - bounds.Width;
-                Position.X = game.GraphicsDevice.Viewport.Width - bounds.Width;
-            }
-            if (bounds.Y < 0)
-            {
-                bounds.Y = 0;
-                Position.Y = 0;
-            }
+            //if (bounds.X < 0)
+            //{
+            //    bounds.X = 0;
+            //    Position.X = 0;
+            //}
+            //if (bounds.X > game.GraphicsDevice.Viewport.Width - bounds.Width)
+            //{
+            //    bounds.X = game.GraphicsDevice.Viewport.Width - bounds.Width;
+            //    Position.X = game.GraphicsDevice.Viewport.Width - bounds.Width;
+            //}
+            //if (bounds.Y < 0)
+            //{
+            //    bounds.Y = 0;
+            //    Position.Y = 0;
+            //}
         }
 
         public void CheckForSpikeCollision(IEnumerable<IBoundable> spikes)

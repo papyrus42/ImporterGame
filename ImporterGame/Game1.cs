@@ -48,14 +48,17 @@ namespace ImporterGame
 
             // TODO: use this.Content to load your game content here
             Stuff stuff = Content.Load<Stuff>("stuff");
-            BoundaryRectangle bbr = new BoundaryRectangle(200, 400, 50, 50);
+            BoundaryRectangle bbr = new BoundaryRectangle(200, 400, 100, 50);
             balloon = new Player(this, bbr, 400);
+            balloon.LoadContent(Content, "balloon");
             world = new AxisList();
             foreach (Vector2 v in stuff.points)
             {
-                BoundaryRectangle sbr = new BoundaryRectangle(v, 50, 50);
-                spikes.Add(new Spikes(sbr));
-                world.AddGameObject(new Spikes(sbr));
+                BoundaryRectangle sbr = new BoundaryRectangle(v, 20, 50);
+                Spikes sp = new Spikes(sbr);
+                sp.LoadContent(Content, "spike");
+                spikes.Add(sp);
+                world.AddGameObject(sp);
             }
             
 
@@ -97,9 +100,11 @@ namespace ImporterGame
 
             // TODO: Add your drawing code here
 
-            spriteBatch.Begin();
+            var offset = new Vector2(200, 300) - balloon.Position;
+            var t = Matrix.CreateTranslation(offset.X, offset.Y, 0);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, t);
 
-            var spikeQuery = world.QueryRange(balloon.Position.X - 221, balloon.Position.X + 400);
+            var spikeQuery = world.QueryRange(balloon.Position.X - 521, balloon.Position.X + 500);
             foreach (Spikes spike in spikeQuery)
             {
                 spike.Draw(spriteBatch);
