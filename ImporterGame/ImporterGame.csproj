@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AxisList.cs" />
     <Compile Include="BoundaryRectangle.cs" />
     <Compile Include="Collisions.cs" />
     <Compile Include="Game1.cs" />

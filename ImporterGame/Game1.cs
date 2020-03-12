@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ImportLibrary;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ImporterGame
 {
@@ -12,6 +14,9 @@ namespace ImporterGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Player balloon;
+        List<Spikes> spikes = new List<Spikes>();
+        AxisList world;
 
         public Game1()
         {
@@ -43,6 +48,17 @@ namespace ImporterGame
 
             // TODO: use this.Content to load your game content here
             Stuff stuff = Content.Load<Stuff>("stuff");
+            BoundaryRectangle bbr = new BoundaryRectangle(200, 400, 50, 50);
+            balloon = new Player(this, bbr, 400);
+            world = new AxisList();
+            foreach (Vector2 v in stuff.points)
+            {
+                BoundaryRectangle sbr = new BoundaryRectangle(v, 50, 50);
+                spikes.Add(new Spikes(sbr));
+                world.AddGameObject(new Spikes(sbr));
+            }
+            
+
         }
 
         /// <summary>
@@ -63,7 +79,9 @@ namespace ImporterGame
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            balloon.Update(gameTime);
+            var spikeQuery = world.QueryRange(balloon.bounds.X, balloon.bounds.X + balloon.bounds.Width);
+            balloon.CheckForSpikeCollision(spikeQuery);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -78,6 +96,17 @@ namespace ImporterGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+
+            var spikeQuery = world.QueryRange(balloon.Position.X - 221, balloon.Position.X + 400);
+            foreach (Spikes spike in spikeQuery)
+            {
+                spike.Draw(spriteBatch);
+            }
+            balloon.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
